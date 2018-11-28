@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+    <script src="app.js"></script>
+
+
+
+    </head>
+    <body> 
+            <div class="Viewmodel1" ng-controller="ko.observable">
+            The name is <span data-bind="text: personName"></span>
+            </div>
+            <div class="Observable">
+                    The name is <span data-bind="text: personName"></span>
+                    The age is <span data-bind="text: personAge"></span>
+
+            </div>
+            <div class="Array">
+                    <div class="alert('The length of the array is ' + myObservableArray().length);"></div>
+                    <div class="alert('The first element is ' + myObservableArray()[0]);"></div>
+            </div>
+            <div class="Component">
+                    <ul data-bind="foreach: products">
+                            <li class="product">
+                                <strong data-bind="text: name"></strong>
+                                <like-widget params="value: userRating"></like-widget>
+                            </li>
+                        </ul>
+
+            </div>
+            <div class="computedFunction">
+                    The name is <span data-bind="text: fullName()"></span>
+
+            </div>
+            <div class="BindingHandler">
+                    <p>Name: <input data-bind="hasFocus: editingName" /></p>
+                     
+                    <div data-bind="visible: editingName">You're editing the name</div>
+                    <button data-bind="enable: !editingName(), click:function() { editingName(true) }">Edit name</button>
+                     
+                    <script type="text/javascript">
+                        var viewModel = {
+                            editingName: ko.observable()
+                        };
+                        ko.applyBindings(viewModel);
+                    </script>
+            </div>
+            <div class="eventHandler">
+                    <ul id="people" data-bind='template: { name: "personTmpl", foreach: people }'>
+                        </ul>
+                         
+                        <script id="personTmpl" type="text/html">
+                            <li>
+                                <a class="remove" href="#"> x </a>
+                                <span data-bind='text: name'></span>
+                                <a class="add" href="#"> add child </a>
+                                <ul data-bind='template: { name: "personTmpl", foreach: children }'></ul>
+                            </li>
+                        </script>
+            </div>
+            <div class="conditionalRendering">
+                    <ul data-bind="template: { name: 'seasonTemplate', foreach: seasons, as: 'season' }"></ul>
+ 
+                    <script type="text/html" id="seasonTemplate">
+                        <li>
+                            <strong data-bind="text: name"></strong>
+                            <ul data-bind="template: { name: 'monthTemplate', foreach: months, as: 'month' }"></ul>
+                        </li>
+                    </script>
+                     
+                    <script type="text/html" id="monthTemplate">
+                        <li>
+                            <span data-bind="text: month"></span>
+                            is in
+                            <span data-bind="text: season.name"></span>
+                        </li>
+                    </script>
+                     
+                    <script>
+                        var viewModel = {
+                            seasons: ko.observableArray([
+                                { name: 'Spring', months: [ 'March', 'April', 'May' ] },
+                                { name: 'Summer', months: [ 'June', 'July', 'August' ] },
+                                { name: 'Autumn', months: [ 'September', 'October', 'November' ] },
+                                { name: 'Winter', months: [ 'December', 'January', 'February' ] }
+                            ])
+                        };
+                        ko.applyBindings(viewModel);
+                    </script>
+            </div>
+    </body>
+</html>
